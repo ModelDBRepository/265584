@@ -98,11 +98,10 @@ ASSIGNED {
 	parea     (um)     : pump area per unit length
 	parea2	  (um)
 	cai       (mM)
+	cao       (mM)
 	mgi	(mM)
 	vrat	(1)	
 }
-
-CONSTANT { cao = 2	(mM) }
 
 STATE {
 	: ca[0] is equivalent to cai
