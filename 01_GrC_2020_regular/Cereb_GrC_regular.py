@@ -134,8 +134,8 @@ class Grc_regular:
         
         self.axon.push() 
         self.axon.eca = 137.5
-        h.pt3dadd(0.0, 5.62232, 0.0, self.axon.diam)
-        h.pt3dadd(0.0, 6.62232, 0.0, self.axon.diam)
+        h.pt3dadd(0.0, -5.62232, 0.0, self.axon.diam)
+        h.pt3dadd(0.0, -6.62232, 0.0, self.axon.diam)
         h.pop_section()
 	
         self.axon.connect(self.soma[0],0,0)  
@@ -175,8 +175,8 @@ class Grc_regular:
         self.ais.push()
         self.ais.eca = 137.5
 		
-        h.pt3dadd(0.0, 6.62232, 0.0, self.ais.diam)
-        h.pt3dadd(0.0, 16.62232, 0.0, self.ais.diam)
+        h.pt3dadd(0.0, -6.62232, 0.0, self.ais.diam)
+        h.pt3dadd(0.0, -16.62232, 0.0, self.ais.diam)
         h.pop_section()
         
         
@@ -185,8 +185,9 @@ class Grc_regular:
         secnumber_pf = int(1000/lensec)
 
         self.ais.connect(self.axon,1,0)
-
-
+          
+        len_initial_ais = -16.62232
+        len_ending = 7
         self.HD_aa = [h.Section(cell=self, name='aa_'+str(x)) for x in range(secnumber_aa)]
         for b in self.HD_aa:
             b.L = lensec
@@ -215,18 +216,18 @@ class Grc_regular:
     
             b.push()
             b.eca = 137.5
-            
-            len_initial = 16.62232
-            len_ending = 7
-            
-            h.pt3dadd(0.0, len_initial , 0.0, b.diam)
-            h.pt3dadd(0.0, len_initial + len_ending, 0.0, b.diam)
+
+            h.pt3dadd(0.0, len_initial_ais , 0.0, b.diam)
+            h.pt3dadd(0.0, len_initial_ais - len_ending, 0.0, b.diam)
             h.pop_section()
             
-            len_initial = len_initial + len_ending
-
+            len_initial_ais = len_initial_ais - len_ending
 
         self.HD_pf1 = [h.Section(cell=self, name='pf_'+str(x)) for x in range(secnumber_pf)]
+ 
+ 
+        len_initial_aa = -142.62232
+        len_ending_pf = 7 
         
         for i in self.HD_pf1:
             i.L = lensec
@@ -256,15 +257,14 @@ class Grc_regular:
             i.push()
             i.eca = 137.5
             
-            len_initial = 142.62232
-            len_ending = 7
+
             
-            h.pt3dadd(len_initial, len_initial , 0.0, i.diam)
-            h.pt3dadd(len_initial + len_ending, len_initial , 0.0, i.diam)
+            h.pt3dadd(len_initial_aa, len_initial_aa , 0.0, i.diam)
+            h.pt3dadd(len_initial_aa + len_ending_pf, len_initial_aa , 0.0, i.diam)
             h.pop_section()
             
-            len_initial = len_initial + len_ending
-            
+            len_initial_aa = len_initial_aa + len_ending_pf
+  
 
         self.HD_pf2 = [h.Section(cell=self, name='pf_'+str(x)) for x in range(secnumber_pf)]	    
         for z in self.HD_pf2:  	
@@ -297,15 +297,12 @@ class Grc_regular:
             z.push()
             z.eca = 137.5
             
-            len_initial = 142.62232
-            len_ending = 7
-            
-            h.pt3dadd(len_initial, len_initial , 0.0, i.diam)
-            h.pt3dadd(len_initial - len_ending, len_initial , 0.0, i.diam)
+            h.pt3dadd(len_initial_aa, len_initial_aa , 0.0, i.diam)
+            h.pt3dadd(len_initial_aa - len_ending_pf, len_initial_aa , 0.0, i.diam)
             h.pop_section()
             
-            len_initial = len_initial - len_ending
-	  
+            len_initial_aa = len_initial_aa - len_ending_pf
+
 	  
       
 #Connections

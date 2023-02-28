@@ -76,7 +76,7 @@ class Grc_accelerate:
         self.soma[0].eca = 137.5
         h.pop_section()
 
-        self.whatami = "GrC_2020_mild"
+        self.whatami = "GrC_2020_acc"
     
 #DEND		  
         for i in self.dend:
@@ -137,8 +137,8 @@ class Grc_accelerate:
         
         self.axon.push() 
         self.axon.eca = 137.5
-        h.pt3dadd(0.0, 5.62232, 0.0, self.axon.diam)
-        h.pt3dadd(0.0, 6.62232, 0.0, self.axon.diam)
+        h.pt3dadd(0.0, -5.62232, 0.0, self.axon.diam)
+        h.pt3dadd(0.0, -6.62232, 0.0, self.axon.diam)
         h.pop_section()
 	
         self.axon.connect(self.soma[0],0,0)  
@@ -178,8 +178,8 @@ class Grc_accelerate:
         self.ais.push()
         self.ais.eca = 137.5
 		
-        h.pt3dadd(0.0, 6.62232, 0.0, self.ais.diam)
-        h.pt3dadd(0.0, 16.62232, 0.0, self.ais.diam)
+        h.pt3dadd(0.0, -6.62232, 0.0, self.ais.diam)
+        h.pt3dadd(0.0, -16.62232, 0.0, self.ais.diam)
         h.pop_section()
         
         
@@ -189,6 +189,8 @@ class Grc_accelerate:
 
         self.ais.connect(self.axon,1,0)
 
+        len_initial = -16.62232
+        len_ending = 7
 
         self.HD_aa = [h.Section(cell=self, name='aa_'+str(x)) for x in range(secnumber_aa)]
         for b in self.HD_aa:
@@ -219,17 +221,19 @@ class Grc_accelerate:
             b.push()
             b.eca = 137.5
             
-            len_initial = 16.62232
-            len_ending = 7
+
             
             h.pt3dadd(0.0, len_initial , 0.0, b.diam)
-            h.pt3dadd(0.0, len_initial + len_ending, 0.0, b.diam)
+            h.pt3dadd(0.0, len_initial - len_ending, 0.0, b.diam)
             h.pop_section()
             
-            len_initial = len_initial + len_ending
+            len_initial = len_initial - len_ending
 
 
         self.HD_pf1 = [h.Section(cell=self, name='pf_'+str(x)) for x in range(secnumber_pf)]
+        
+        len_initial = -142.62232
+        len_ending_pf = 7
         
         for i in self.HD_pf1:
             i.L = lensec
@@ -259,14 +263,11 @@ class Grc_accelerate:
             i.push()
             i.eca = 137.5
             
-            len_initial = 142.62232
-            len_ending = 7
-            
             h.pt3dadd(len_initial, len_initial , 0.0, i.diam)
-            h.pt3dadd(len_initial + len_ending, len_initial , 0.0, i.diam)
+            h.pt3dadd(len_initial + len_ending_pf, len_initial , 0.0, i.diam)
             h.pop_section()
             
-            len_initial = len_initial + len_ending
+            len_initial = len_initial + len_ending_pf
             
 
         self.HD_pf2 = [h.Section(cell=self, name='pf_'+str(x)) for x in range(secnumber_pf)]	    
@@ -300,14 +301,11 @@ class Grc_accelerate:
             z.push()
             z.eca = 137.5
             
-            len_initial = 142.62232
-            len_ending = 7
-            
             h.pt3dadd(len_initial, len_initial , 0.0, i.diam)
-            h.pt3dadd(len_initial - len_ending, len_initial , 0.0, i.diam)
+            h.pt3dadd(len_initial - len_ending_pf, len_initial , 0.0, i.diam)
             h.pop_section()
             
-            len_initial = len_initial - len_ending
+            len_initial = len_initial - len_ending_pf
 	  
 	  
       
