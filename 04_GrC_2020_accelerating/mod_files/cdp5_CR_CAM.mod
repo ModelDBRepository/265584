@@ -27,8 +27,6 @@ ENDCOMMENT
 NEURON {
   SUFFIX cdp5_CR_CAM
   USEION ca READ cao, cai, ica WRITE cai
-  USEION nr2a WRITE nr2ai VALENCE 1
-  USEION nr2c WRITE nr2ci VALENCE 1
   USEION con_2c WRITE con_2ci VALENCE 1
   RANGE ica_pmp
   RANGE Nannuli, Buffnull2, rf3, rf4, vrat, cainull, CR, CR_1C_0N, CR_2C_2N, CR_1V, CRnull
@@ -122,14 +120,13 @@ ASSIGNED {
 	parea     (um)     : pump area per unit length
 	parea2	  (um)
 	cai       (mM)
+		cao       (mM)
 	mgi	(mM)
 	vrat	(1)	
-	nr2ai  (mM)
-	nr2ci  (mM)
 	con_2ci (mM)
 }
 
-CONSTANT { cao = 2	(mM) }
+:CONSTANT { cao = 2	(mM) }
 
 STATE {
 	: ca[0] is equivalent to cai
@@ -278,7 +275,7 @@ LOCAL dsq, dsqvol  : can't define local variable in KINETIC block
                    :   or use in COMPARTMENT statement
 
 KINETIC state {
-  COMPARTMENT diam*diam*vrat {ca mg Buff1 Buff1_ca Buff2 Buff2_ca BTC BTC_ca DMNPE DMNPE_ca CR CR_1C_0N CR_2C_0N CR_2C_1N CR_0C_1N CR_0C_2N CR_1C_2N CR_1C_1N CR_2C_1N CR_1C_2N CR_2C_2N}
+  COMPARTMENT diam*diam*vrat {ca mg Buff1 Buff1_ca Buff2 Buff2_ca BTC BTC_ca DMNPE DMNPE_ca CR CR_1C_0N CR_2C_0N CR_2C_1N CR_0C_1N CR_0C_2N CR_1C_2N CR_1C_1N CR_2C_2N CR_1V }
   COMPARTMENT (1e10)*parea {pump pumpca}
 
 
@@ -301,23 +298,23 @@ KINETIC state {
 		~ ca + BTC <-> BTC_ca (b1*dsqvol, b2*dsqvol)
 		~ ca + DMNPE <-> DMNPE_ca (c1*dsqvol, c2*dsqvol)
         	
-        	:Calretinin
-        	:Slow state
+		:Calretinin
+		:Slow state
 		~ ca + CR <-> CR_1C_0N (nT1*dsqvol, nT2*dsqvol)
-	       	~ ca + CR_1C_0N <-> CR_2C_0N (nR1*dsqvol, nR2*dsqvol)
-	       	~ ca + CR_2C_0N <-> CR_2C_1N (nT1*dsqvol, nT2*dsqvol)
-	       	
-	       	:fast state
+		~ ca + CR_1C_0N <-> CR_2C_0N (nR1*dsqvol, nR2*dsqvol)
+		~ ca + CR_2C_0N <-> CR_2C_1N (nT1*dsqvol, nT2*dsqvol)
+		
+		:fast state
 		~ ca + CR <-> CR_0C_1N (nT1*dsqvol, nT2*dsqvol)
 		~ ca + CR_0C_1N <-> CR_0C_2N (nR1*dsqvol, nR2*dsqvol)
 		~ ca + CR_0C_2N <-> CR_1C_2N (nT1*dsqvol, nT2*dsqvol)
+	
+		:complete
+		~ ca + CR_2C_1N <-> CR_2C_2N (nR1*dsqvol, nR2*dsqvol)
+		~ ca + CR_1C_2N <-> CR_2C_2N (nR1*dsqvol, nR2*dsqvol)
 		
-        	:complete
-        	~ ca + CR_2C_1N <-> CR_2C_2N (nR1*dsqvol, nR2*dsqvol)
-        	~ ca + CR_1C_2N <-> CR_2C_2N (nR1*dsqvol, nR2*dsqvol)
-        	
-        	:mixed
-        	~ ca + CR_1C_0N <-> CR_1C_1N (nT1*dsqvol, nT2*dsqvol)   
+		:mixed
+		~ ca + CR_1C_0N <-> CR_1C_1N (nT1*dsqvol, nT2*dsqvol)   
 		~ ca + CR_0C_1N <-> CR_1C_1N (nT1*dsqvol, nT2*dsqvol) 
 		
 		~ ca + CR_1C_1N <-> CR_2C_1N (nR1*dsqvol, nR2*dsqvol)   
@@ -348,9 +345,6 @@ KINETIC state {
         	
   	cai = ca
 	mgi = mg
-	
-        nr2ai = CAM4/2
-	nr2ci = CAM4/2
 	
 	con_2ci = CAM2C
 }

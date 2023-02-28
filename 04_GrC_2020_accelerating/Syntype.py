@@ -18,7 +18,7 @@ class Synapse_py3:
                              
 #granule cell     
         if sourcetype == 'mossy':
-            if target.whatami == 'GrC_2020_mild':
+            if target.whatami == 'GrC_2020_acc':
                 self.whatami = "syn_mossytoGrC_det"
                 self.postsyns['AMPA'] = [h.GRANULE_Ampa_det_vi(0.9, sec=section)]
                 self.postsyns['AMPA'][0].tau_facil=5
@@ -30,7 +30,7 @@ class Synapse_py3:
                 self.nc_syn = [h.NetCon(self.input,receptor[0],0,0.1,1) for receptor in self.postsyns.values()]
             
         elif sourcetype == 'mossynmda':
-            if target.whatami == 'GrC_2020_mild':
+            if target.whatami == 'GrC_2020_acc':
                 self.whatami = "syn_mossytoGrC_det_nmda"
                 self.postsyns['NMDA'] = [h.GRANULE_Nmda_det_vi(0.9, sec=section)]
                 self.postsyns['NMDA'][0].tau_facil=5

@@ -98,10 +98,12 @@ ASSIGNED {
 	parea     (um)     : pump area per unit length
 	parea2	  (um)
 	cai       (mM)
-	cao       (mM)
+	cao       (mM)	
 	mgi	(mM)
 	vrat	(1)	
 }
+
+:CONSTANT { cao = 2	(mM) }
 
 STATE {
 	: ca[0] is equivalent to cai
@@ -222,7 +224,7 @@ LOCAL dsq, dsqvol  : can't define local variable in KINETIC block
                    :   or use in COMPARTMENT statement
 
 KINETIC state {
-  COMPARTMENT diam*diam*vrat {ca mg Buff1 Buff1_ca Buff2 Buff2_ca BTC BTC_ca DMNPE DMNPE_ca CR CR_1C_0N CR_2C_0N CR_2C_1N CR_0C_1N CR_0C_2N CR_1C_2N CR_1C_1N CR_2C_1N CR_1C_2N CR_2C_2N}
+  COMPARTMENT diam*diam*vrat {ca mg Buff1 Buff1_ca Buff2 Buff2_ca BTC BTC_ca DMNPE DMNPE_ca CR CR_1C_0N CR_2C_0N CR_2C_1N CR_0C_1N CR_0C_2N CR_1C_2N CR_1C_1N CR_2C_2N CR_1V}
   COMPARTMENT (1e10)*parea {pump pumpca}
 
 
