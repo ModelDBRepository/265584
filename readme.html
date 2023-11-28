@@ -32,6 +32,11 @@ calculation on all the available cores.
 
 The maximum number of cores that can be used by the models is 8.
 
+- Update 10 November 2022
+The sodium channels and the calcium buffer were modified to by compliant with the upcoming NEURON 9.
+
+-> These modifications do not change the physiological results.
+
 
 Usage instructions:
 
@@ -86,14 +91,5 @@ https://www.humanbrainproject.eu/en/explore-the-brain/search/
 
 A Live Paper can be found on the HBP Brain Simulation Platform.
 <a href="https://collab.humanbrainproject.eu/#/collab/1655/nav/306845">https://collab.humanbrainproject.eu/#/collab/1655/nav/306845</a>
-
-
-Changelog
----------
-
-* cdp5*.mod files are updated due to issue mentioned in https://github.com/neuronsimulator/nrn/pull/1955.
-CONSTANT block has no effect in the initialization of ion variables.
-* 20220924: Update MOD files to avoid declaring variables and functions with the same name.
-  See https://github.com/neuronsimulator/nrn/pull/1992
 
 </pre></html>
